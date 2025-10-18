@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwasthCard - Patient Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <div>
+                    <div class="logo">🏥 SwasthCard</div>
+                    <div class="tagline">Your Health, One Tap Away!</div>
+                </div>
+            </div>
+            <div class="rfid-status">
+                <div class="status-dot"></div>
+                RFID Active
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="profile-photo">RS</div>
+                <div class="patient-name">Rajesh Sharma</div>
+                <div class="patient-id">SwasthCard ID: SC2025-0042891</div>
+
+                <div class="info-group">
+                    <div class="info-label">Date of Birth</div>
+                    <div class="info-value">15 March 1985</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">Age</div>
+                    <div class="info-value">40 Years</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">Gender</div>
+                    <div class="info-value">Male</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">Blood Group</div>
+                    <div class="info-value">O+</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">Height / Weight</div>
+                    <div class="info-value">175 cm / 78 kg</div>
+                </div>
+
+                <div class="emergency-contact">
+                    <div class="info-label">Emergency Contact</div>
+                    <div class="info-value">Priya Sharma</div>
+                    <div class="info-value" style="font-size: 14px; margin-top: 5px;">+91 98765-43210</div>
+                    <div class="info-value" style="font-size: 12px; color: #64748b; margin-top: 3px;">Spouse</div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Doctor Visits</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Lab Reports</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Prescriptions</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Vaccinations</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="alert-box">
+                        <div class="alert-icon">⚠️</div>
+                        <div>
+                            <strong>AI Health Insight:</strong> Your blood pressure readings show an upward trend. Consider reducing salt intake and increasing physical activity. Schedule a follow-up with your cardiologist.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🚨 Known Allergies</div>
+                    </div>
+                    <div class="allergy-tags">
+                        <div class="allergy-tag">Penicillin</div>
+                        <div class="allergy-tag">Peanuts</div>
+                        <div class="allergy-tag">Shellfish</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">💊 Current Medications</div>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="medication-item">
+                        <div>
+                            <div class="medication-name">Metformin 500mg</div>
+                            <div class="medication-dose">Twice daily - After meals</div>
+                        </div>
+                        <div class="medication-status">Active</div>
+                    </div>
+                    <div class="medication-item">
+                        <div>
+                            <div class="medication-name">Atorvastatin 10mg</div>
+                            <div class="medication-dose">Once daily - Before bed</div>
+                        </div>
+                        <div class="medication-status">Active</div>
+                    </div>
+                    <div class="medication-item">
+                        <div>
+                            <div class="medication-name">Vitamin D3 60000 IU</div>
+                            <div class="medication-dose">Weekly - Sunday morning</div>
+                        </div>
+                        <div class="medication-status">Active</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📋 Medical History</div>
+                    </div>
+                    <div style="color: #64748b; line-height: 1.8;">
+                        <strong style="color: #1e293b;">Chronic Conditions:</strong> Type 2 Diabetes (diagnosed 2018), Hypertension (diagnosed 2020)<br>
+                        <strong style="color: #1e293b;">Past Surgeries:</strong> Appendectomy (2010)<br>
+                        <strong style="color: #1e293b;">Family History:</strong> Father - Heart Disease, Mother - Diabetes
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📄 Recent Reports</div>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="report-item">
+                        <div>
+                            <div class="report-name">Complete Blood Count (CBC)</div>
+                            <div class="report-date">12 Oct 2025</div>
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                    <div class="report-item">
+                        <div>
+                            <div class="report-name">HbA1c Test</div>
+                            <div class="report-date">05 Oct 2025</div>
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                    <div class="report-item">
+                        <div>
+                            <div class="report-name">Lipid Profile</div>
+                            <div class="report-date">28 Sep 2025</div>
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                    <div class="report-item">
+                        <div>
+                            <div class="report-name">ECG Report</div>
+                            <div class="report-date">15 Sep 2025</div>
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
