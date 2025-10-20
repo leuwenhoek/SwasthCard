@@ -1,8 +1,26 @@
 import os
 from flask import Flask,render_template,request,redirect,url_for
+import sys
+from os.path import dirname, join, abspath
 
+# Mymodules
+sys.path.append(abspath(join(dirname(__file__), '..')))
+from modules import myjson
 
 app = Flask(__name__)
+
+# Initializing JSON
+def init_JSON():
+    jn = myjson.JSON()
+    if not os.path.exists('database'):
+        os.mkdir("database")
+    JSON_FOLDER = os.path.join("database")
+    jn.create_JSON(JSON_FOLDER,"patient_profile.json")
+    jn.create_JSON(JSON_FOLDER,"doctor_profile.json")
+
+# Global locations
+PATIENT_JSON = os.path.join("database","patient_profile.json")
+DOCTOR_JSON = os.path.join("database","doctor_profile.json")
 
 # send user to home page that he/she is a doctor or patient
 @app.route("/",methods=["GET","POST"])
@@ -43,4 +61,5 @@ def doctor_profile():
     return "1"
 
 if __name__ == "__main__":
+    init_JSON()
     app.run(debug=True)
