@@ -3,9 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwasthCard - Profile</title>
+    <title>SwasthCard - Patient Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Patient_profile.css') }}">
+    <style>
+        /* Styles for the Sliding Tab (Modal) */
+        .sliding-tab-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            justify-content: flex-end; /* Push content to the right */
+        }
+
+        .sliding-tab {
+            width: 90%;
+            max-width: 400px; /* Max width for the tab */
+            height: 100%;
+            background: #111827; /* Dark background to match card style */
+            backdrop-filter: blur(15px);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.4s ease-out;
+            padding: 25px;
+            position: relative;
+            overflow-y: auto;
+            border-left: 2px solid #6366f1;
+        }
+
+        .sliding-tab.open {
+            transform: translateX(0); /* Slide in */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #ec4899;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #fca5a5;
+        }
+
+        .generational-header {
+            color: #6366f1;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .generation-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(31, 41, 55, 0.5);
+            border-radius: 10px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        .generation-group h3 {
+            color: #a78bfa;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .family-member {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(55, 65, 81, 0.5);
+            border-radius: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .member-info {
+            margin-bottom: 5px;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .member-relation {
+            color: #9ca3af;
+            font-size: 0.9em;
+        }
+
+        .member-conditions {
+            color: #fbbf24;
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .member-status {
+            color: #10b981;
+            font-size: 0.9em;
+        }
+
+        .member-status.deceased {
+            color: #ef4444;
+        }
+        
+        .genetic-item {
+            cursor: pointer;
+        }
+
+        .genetic-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* NEW STYLE FOR AI BUTTON CONTAINER */
+        .ai-suggestion-container {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: flex-end; /* Align button to the right */
+        }
+
+        /* NEW STYLE FOR AI BUTTON */
+        .ai-suggestion-btn {
+            background: #6366f1; /* Indigo background */
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline for anchor tag */
+            transition: background 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.9em;
+        }
+
+        .ai-suggestion-btn:hover {
+            background: #4f46e5; /* Darker indigo on hover */
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, Ayush</h1>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-photo-section">
+                <div class="profile-photo">
+                    <img src="https://iili.io/KS59FJp.md.png" alt="Profile Photo" id="profileImage">
+                    <div class="photo-overlay">
+                        <span>Change Photo</span>
+                    </div>
+                </div>
+                <div class="profile-name">
+                    <h1>Ayush Kumar</h1>
+                    <p class="profile-subtitle">Patient ID: PT-2024-001</p>
+                </div>
+            </div>
+            <div class="rfid-badge">
+                <div class="rfid-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="16" rx="2"/>
+                        <line x1="7" y1="8" x2="17" y2="8"/>
+                        <line x1="7" y1="12" x2="17" y2="12"/>
+                        <line x1="7" y1="16" x2="13" y2="16"/>
+                    </svg>
+                </div>
+                <div class="rfid-info">
+                    <span class="rfid-label">RFID Number</span>
+                    <span class="rfid-number">2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <h2>Personal Details</h2>
+            </div>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Full Name</span>
+                    <span class="detail-value">Ayush Kumar</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date of Birth</span>
+                    <span class="detail-value">08 September 2010</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Age</span>
+                    <span class="detail-value">15 Years</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Gender</span>
+                    <span class="detail-value">Male</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Blood Group</span>
+                    <span class="detail-value blood-group">O+</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Contact</span>
+                    <span class="detail-value">+91 98765 *****</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">abc@xyz.com</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Address</span>
+                    <span class="detail-value">123, XYZ Road, Delhi, India</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    <path d="M12 6v6l4 2"/>
+                </svg>
+                <h2>Genetic Data</h2>
+            </div>
+            
+            <div class="ai-suggestion-container">
+                <a href="{{ url_for('patient_profile', AI='true') }}" class="ai-suggestion-btn">See AI Suggestion</a>
+            </div>
+
+            <div class="genetic-info">
+                {% if generations.paternal %}
+                <div class="genetic-item" onclick="openSlidingTab('Paternal')">
+                    <div class="genetic-header">
+                        <span class="genetic-label">Paternal History</span>
+                    </div>
+                    <div class="genetic-details">
+                        {% set father_data = generations.paternal.father | default({}) %}
+                        {% if father_data %}
+                        {% set father_status = father_data.status | default('') %}
+                        <div class="genetic-detail">
+                            <span class="condition">{{ father_data.health_conditions | default([]) | join(', ') }}</span>
+                            <span class="relation">{{ father_data.relation | default('Father') }} 
+                                {% if '(' in father_status %}
+                                    ({{ father_status.split('(')[1].split(')')[0] }})
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% else %}
+                        <div class="genetic-detail">
+                            <span class="condition">No father data available</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if generations.maternal %}
+                <div class="genetic-item" onclick="openSlidingTab('Maternal')">
+                    <div class="genetic-header">
+                        <span class="genetic-label">Maternal History</span>
+                    </div>
+                    <div class="genetic-details">
+                        {% set mother_data = generations.maternal.mother | default({}) %}
+                        {% if mother_data %}
+                        {% set mother_status = mother_data.status | default('') %}
+                        <div class="genetic-detail">
+                            <span class="condition">{{ mother_data.health_conditions | default([]) | join(', ') }}</span>
+                            <span class="relation">{{ mother_data.relation | default('Mother') }} 
+                                {% if '(' in mother_status %}
+                                    ({{ mother_status.split('(')[1].split(')')[0] }})
+                                {% endif %}
+                            </span>
+                        </div>
+                        {% else %}
+                        <div class="genetic-detail">
+                            <span class="condition">No mother data available</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="genetic-risk-factors">
+                    <h3>Risk Factors</h3>
+                    <div class="risk-tags">
+                        <span class="risk-tag medium">Diabetes Risk: Medium</span>
+                        <span class="risk-tag low">Heart Disease: Low</span>
+                        <span class="risk-tag medium">Thyroid: Medium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-header">
+                <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                </svg>
+                <h2>Medical History</h2>
+            </div>
+            {% if history %}
+            <div class="history-timeline">
+                {% for entry in history %}
+                <div class="history-entry">
+                    <div class="timeline-dot"></div>
+                    <div class="history-card">
+                        <div class="history-header">
+                            <span class="history-date">{{ entry.date_time }}</span>
+                            <span class="history-badge">{{ entry.conclusion.split(',')[0] }}</span>
+                        </div>
+                        <div class="history-details">
+                            <div class="history-row">
+                                <span class="history-label">Symptoms:</span>
+                                <span class="history-value">{{ entry.symptoms }}</span>
+                            </div>
+                            <div class="history-row">
+                                <span class="history-label">Doctor:</span>
+                                <span class="history-value">{{ entry.doctor_name }}</span>
+                            </div>
+                            <div class="history-row">
+                                <span class="history-label">Diagnosis:</span>
+                                <span class="history-value">{{ entry.conclusion }}</span>
+                            </div>
+                            <div class="history-row">
+                                <span class="history-label">Location:</span>
+                                <span class="history-value">{{ entry.location }}</span>
+                            </div>
+                            <div class="history-prescription">
+                                <span class="prescription-label">Prescription:</span>
+                                <ul>
+                                    <li>Not specified</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <p>No medical history available</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="generationalTabOverlay" class="sliding-tab-overlay">
+        <div id="generationalTab" class="sliding-tab">
+            <button class="close-btn" onclick="closeSlidingTab()">&times;</button>
+            <h2 id="tabHeader" class="generational-header"></h2>
+            <div id="tabContent" class="generational-data"></div>
+        </div>
+    </div>
+
+    <script>
+        // FIX: Safely parse the generations object from Jinja into a JS variable
+        // This relies on your Flask view passing the 'generations' variable.
+        const generationTree = JSON.parse('{{ generations | tojson | safe }}');
+
+        const tabOverlay = document.getElementById('generationalTabOverlay');
+        const slidingTab = document.getElementById('generationalTab');
+        const tabHeader = document.getElementById('tabHeader');
+        const tabContent = document.getElementById('tabContent');
+
+        function openSlidingTab(historyType) {
+            // Select paternal or maternal data
+            const sideData = historyType === 'Paternal' ? generationTree.paternal : generationTree.maternal;
+            
+            if (!sideData) {
+                tabContent.innerHTML = '<p>No data available for this family history.</p>';
+                tabHeader.textContent = historyType + ' Family Tree';
+                tabOverlay.style.display = 'flex';
+                setTimeout(() => slidingTab.classList.add('open'), 10);
+                return;
+            }
+
+            tabHeader.textContent = historyType + ' Family Tree';
+            let contentHTML = '';
+
+            // Helper function to render family members
+            function renderMembers(members, groupTitle) {
+                // Ensure members is an array and filter out nulls/falsy values
+                const validMembers = Array.isArray(members) ? members.filter(Boolean) : [members].filter(Boolean);
+                
+                if (validMembers.length === 0) return '';
+                
+                let html = `<div class="generation-group"><h3>${groupTitle}</h3>`;
+                validMembers.forEach(member => {
+                    const statusText = member.status || 'Status Unknown';
+                    const statusClass = statusText.includes('Deceased') ? 'deceased' : '';
+                    const conditionsText = (member.health_conditions && member.health_conditions.length > 0) ? member.health_conditions.join(', ') : 'None specified';
+
+                    html += `
+                        <div class="family-member">
+                            <div class="member-info">
+                                <div class="member-name">${member.name || 'N/A'}</div>
+                                <div class="member-relation">${member.relation || 'N/A'}</div>
+                                <div class="member-conditions">${conditionsText}</div>
+                            </div>
+                            <div class="member-status ${statusClass}">${statusText}</div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                return html;
+            }
+
+            // Define family members for each group
+            // Using sideData to safely access sub-objects
+            const greatGrandparents = [
+                sideData.great_grandfather,
+                sideData.great_grandmother
+            ].filter(Boolean);
+
+            const grandparents = [
+                sideData.grandfather,
+                sideData.grandmother
+            ].filter(Boolean);
+
+            const relatives = [
+                sideData.father || sideData.mother, // Only one of these will be present in sideData
+                sideData.paternal_uncle || sideData.maternal_aunt,
+                sideData.paternal_cousin || sideData.maternal_cousin
+            ].filter(Boolean);
+
+            // Render each group
+            contentHTML += renderMembers(greatGrandparents, 'Great Grandparents');
+            contentHTML += renderMembers(grandparents, 'Grandparents');
+            contentHTML += renderMembers(relatives, 'Parents & Relatives');
+
+            // Fallback if no data
+            if (!contentHTML) {
+                contentHTML = '<p>No family history data available.</p>';
+            }
+
+            tabContent.innerHTML = contentHTML;
+
+            // Show the sliding tab
+            tabOverlay.style.display = 'flex';
+            setTimeout(() => slidingTab.classList.add('open'), 10);
+        }
+
+        function closeSlidingTab() {
+            slidingTab.classList.remove('open');
+            setTimeout(() => tabOverlay.style.display = 'none', 400);
+        }
+
+        // Close tab on overlay click
+        tabOverlay.addEventListener('click', (event) => {
+            if (event.target === tabOverlay) {
+                closeSlidingTab();
+            }
+        });
+    </script>
 </body>
 </html>
