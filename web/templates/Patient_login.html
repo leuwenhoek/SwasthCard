@@ -14,32 +14,29 @@
                 <p>Sign in to your SwasthCard account</p>
             </div>
 
-            <form class="login-form" id="loginForm">
+            <form action="/patient_login" method="POST" class="login-form" id="loginForm">
                 <div class="input-group">
-                    <label for="number">RFID number</label>
+                    <label for="num">RFID number</label>
                     <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
+                        type="number" 
+                        id="number" 
+                        name="num" 
                         placeholder="Enter your RFID number"
                         required
                     >
                 </div>
 
                 <div class="input-group">
-                    <label for="password">Password</label>
+                    <label for="pass">Password</label>
                     <input 
                         type="password" 
                         id="password" 
-                        name="password" 
+                        name="pass" 
                         placeholder="Enter your password"
                         required
                     >
                 </div>
-
-                <button type="submit" class="login-btn">
-                    <span>Sign In</span>
-                </button>
+                <button type="submit" class="login-btn">Sign in</button>
 
                 </div>
             </form>
