@@ -1,0 +1,750 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Keyframe Animations */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Body and Background */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    padding: 20px 15px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: float 20s infinite linear;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.8s ease-out;
+    padding: 0 10px;
+}
+
+/* Profile Header */
+.profile-header {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+}
+
+.profile-header:hover::before {
+    opacity: 0.3;
+}
+
+/* Profile Photo Section */
+.profile-photo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid rgba(99, 102, 241, 0.5);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+    border-color: #6366f1;
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 8px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-photo:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-overlay span {
+    color: white;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+/* Profile Name */
+.profile-name h1 {
+    font-size: 2em;
+    background: linear-gradient(135deg, #6366f1, #a78bfa, #ec4899);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.profile-subtitle {
+    color: #9ca3af;
+    font-size: 0.95em;
+}
+
+/* RFID Badge */
+.rfid-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
+
+.rfid-badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+}
+
+.rfid-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.rfid-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.rfid-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.rfid-label {
+    color: #9ca3af;
+    font-size: 0.8em;
+    margin-bottom: 3px;
+}
+
+.rfid-number {
+    color: #ffffff;
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* Section Card */
+.section-card {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.section-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+}
+
+.section-card:hover::before {
+    opacity: 0.2;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.section-icon {
+    width: 28px;
+    height: 28px;
+    color: #a78bfa;
+    flex-shrink: 0;
+}
+
+.section-header h2 {
+    font-size: 1.6em;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Details Grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detail-label {
+    color: #9ca3af;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.blood-group {
+    display: inline-block;
+    background: linear-gradient(135deg, #ec4899, #f43f5e);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+/* Genetic Info */
+.genetic-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.genetic-item {
+    background: rgba(31, 41, 55, 0.5);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.genetic-header {
+    margin-bottom: 12px;
+}
+
+.genetic-label {
+    color: #a78bfa;
+    font-size: 1.05em;
+    font-weight: 600;
+}
+
+.genetic-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.genetic-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: rgba(17, 24, 39, 0.5);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.condition {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.relation {
+    color: #9ca3af;
+    font-size: 0.85em;
+}
+
+/* Genetic Risk Factors */
+.genetic-risk-factors {
+    background: rgba(31, 41, 55, 0.5);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.genetic-risk-factors h3 {
+    color: #ffffff;
+    font-size: 1.05em;
+    margin-bottom: 12px;
+}
+
+.risk-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.risk-tag {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.risk-tag.low {
+    background: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.risk-tag.medium {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fcd34d;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.risk-tag.high {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* History Timeline */
+.history-timeline {
+    position: relative;
+    padding-left: 35px;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #6366f1, #8b5cf6, #ec4899);
+}
+
+.history-entry {
+    position: relative;
+    margin-bottom: 25px;
+    animation: slideIn 0.5s ease-out;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -29px;
+    top: 10px;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    border: 3px solid rgba(17, 24, 39, 0.85);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.history-card {
+    background: rgba(31, 41, 55, 0.5);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    transition: all 0.3s ease;
+}
+
+.history-card:hover {
+    transform: translateX(5px);
+    border-color: #6366f1;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.history-date {
+    color: #a78bfa;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.history-badge {
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 5px;
+    font-size: 0.8em;
+    color: white;
+    font-weight: 600;
+}
+
+.history-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.history-label {
+    color: #9ca3af;
+    font-weight: 500;
+    min-width: 90px;
+    font-size: 0.9em;
+}
+
+.history-value {
+    color: #ffffff;
+    flex: 1;
+    font-size: 0.9em;
+}
+
+.history-prescription {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.prescription-label {
+    color: #ec4899;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+}
+
+.history-prescription ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.history-prescription li {
+    color: #d1d5db;
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+    font-size: 0.9em;
+}
+
+.history-prescription li::before {
+    content: '•';
+    position: absolute;
+    left: 5px;
+    color: #a78bfa;
+    font-weight: bold;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #6b7280;
+}
+
+.empty-state svg {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .profile-container {
+        padding: 0 5px;
+    }
+
+    .profile-header {
+        padding: 20px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-photo-section {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .profile-photo {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profile-name h1 {
+        font-size: 1.6em;
+    }
+
+    .profile-subtitle {
+        font-size: 0.85em;
+    }
+
+    .rfid-badge {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .rfid-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .rfid-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .rfid-number {
+        font-size: 1.3em;
+    }
+
+    .section-card {
+        padding: 20px 15px;
+    }
+
+    .section-header h2 {
+        font-size: 1.4em;
+    }
+
+    .section-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .history-timeline {
+        padding-left: 28px;
+    }
+
+    .history-timeline::before {
+        left: 10px;
+    }
+
+    .timeline-dot {
+        left: -24px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .history-label {
+        min-width: auto;
+        font-weight: 600;
+    }
+
+    .history-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .genetic-detail {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px 5px;
+    }
+
+    .profile-photo {
+        width: 70px;
+        height: 70px;
+    }
+
+    .profile-name h1 {
+        font-size: 1.4em;
+    }
+
+    .rfid-number {
+        font-size: 1.2em;
+    }
+
+    .section-card {
+        padding: 18px 12px;
+    }
+
+    .section-header h2 {
+        font-size: 1.2em;
+    }
+
+    .details-grid {
+        gap: 12px;
+    }
+
+    .history-card {
+        padding: 15px;
+    }
+
+    .genetic-item,
+    .genetic-risk-factors {
+        padding: 15px;
+    }
+
+    .risk-tags {
+        gap: 6px;
+    }
+
+    .risk-tag {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .profile-name h1 {
+        font-size: 1.3em;
+    }
+
+    .section-header h2 {
+        font-size: 1.1em;
+    }
+
+    .rfid-badge {
+        padding: 12px 15px;
+    }
+}
+
