@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwasthCard</title>
+    <!-- Flask friendly static path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='Home.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to SwasthCard</h1>
+        <p>Select your role:</p>
+        <div class="buttons">
+             <form action="/" method="POST">
+        <button type="submit" name="role" value="patient">I am a Patient</button>
+        <button type="submit" name="role" value="doctor">I am a Doctor</button>
+    </form>
+        </div>
+    </div>
+</body>
+</html>
