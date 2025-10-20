@@ -1,4 +1,6 @@
+import os
 from flask import Flask,render_template,request,redirect,url_for
+
 
 app = Flask(__name__)
 
@@ -18,7 +20,7 @@ def doctor():
     doctor_code = request.form.get('code')
     password = request.form.get('pass')
     if doctor_code == "1234" and password == "1234":  # login pass is "doctor code : 1234" and "password : 1234"
-        return redirect("/")
+        return redirect("/doctor_profile")
     return render_template("Doctor_login.html")
 
 @app.route("/patient_login",methods=["GET","POST"])
@@ -28,12 +30,17 @@ def patient():
     print(RFID_num)
     print(password)
     if RFID_num == "2025" and password == "Ayush":  # login pass is "RFID Number : 2025" and "password : Ayush"
-        return redirect("/")
+        return redirect("/paitent_profile")
     return render_template("Patient_login.html")
 
-@app.route("/profile")
-def profile():
+#profile of doctor and patient
+@app.route("/paitent_profile")
+def paitnet_profile():
     return "0"
+
+@app.route("/doctor_profile")
+def doctor_profile():
+    return "1"
 
 if __name__ == "__main__":
     app.run(debug=True)
