@@ -14,32 +14,29 @@
                 <p>Sign in to your SwasthCard account</p>
             </div>
 
-            <form class="login-form" id="loginForm">
+            <form action="/doctor_login" method="POST" class="login-form" id="loginForm">
                 <div class="input-group">
-                    <label for="name">Doctor name</label>
+                    <label for="code">Doctor's code</label>
                     <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Enter Doctor's name"
+                        type="number" 
+                        id="number" 
+                        name="code" 
+                        placeholder="Enter Doctor's code"
                         required
                     >
                 </div>
 
                 <div class="input-group">
-                    <label for="password">Password</label>
+                    <label for="pass">Password</label>
                     <input 
                         type="password" 
                         id="password" 
-                        name="password" 
+                        name="pass" 
                         placeholder="Enter your password"
                         required
                     >
                 </div>
-
-                <button type="submit" class="login-btn">
-                    <span>Sign In</span>
-                </button>
+                <button type="submit" class="login-btn">Sign in</button>
 
                 </div>
             </form>
