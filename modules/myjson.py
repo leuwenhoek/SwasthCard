@@ -922,6 +922,317 @@ class data:
         elif want == "generations":
             return generations
         raise ValueError("command not found")
+    
+    def doctor_data(self,want):
+        history = {
+  "doctor_name": "Dr. Ivy Martinez",
+  "patients_treated": [
+    {
+      "name": "Aditi Sharma",
+      "age": 34,
+      "symptoms": "fever, cough, fatigue",
+      "visit_date": "2025-10-21"
+    },
+    {
+      "name": "Rohan Patel",
+      "age": 47,
+      "symptoms": "chest pain, shortness of breath",
+      "visit_date": "2025-10-20"
+    },
+    {
+      "name": "Sneha Gupta",
+      "age": 19,
+      "symptoms": "rash, itching",
+      "visit_date": "2025-10-18"
+    },
+    {
+      "name": "Vikram Singh",
+      "age": 62,
+      "symptoms": "joint pain, swelling",
+      "visit_date": "2025-10-15"
+    },
+    {
+      "name": "Priya Nair",
+      "age": 28,
+      "symptoms": "headache, nausea, dizziness",
+      "visit_date": "2025-10-12"
+    },
+    {
+      "name": "Arjun Reddy",
+      "age": 15,
+      "symptoms": "cough, wheezing",
+      "visit_date": "2025-10-10"
+    },
+    {
+      "name": "Lakshmi Joshi",
+      "age": 53,
+      "symptoms": "abdominal pain, diarrhea",
+      "visit_date": "2025-10-08"
+    },
+    {
+      "name": "Soham Desai",
+      "age": 9,
+      "symptoms": "vomiting, dehydration",
+      "visit_date": "2025-10-05"
+    },
+    {
+      "name": "Ananya Verma",
+      "age": 41,
+      "symptoms": "sore throat, runny nose",
+      "visit_date": "2025-10-03"
+    },
+    {
+      "name": "Kiran Malhotra",
+      "age": 67,
+      "symptoms": "back pain, stiffness",
+      "visit_date": "2025-10-01"
+    },
+    {
+      "name": "Meera Kapoor",
+      "age": 25,
+      "symptoms": "fever, fatigue",
+      "visit_date": "2025-09-28"
+    },
+    {
+      "name": "Rahul Mehra",
+      "age": 50,
+      "symptoms": "chest pain, palpitations",
+      "visit_date": "2025-09-25"
+    },
+    {
+      "name": "Nisha Yadav",
+      "age": 30,
+      "symptoms": "rash, swelling",
+      "visit_date": "2025-09-22"
+    },
+    {
+      "name": "Amit Choudhary",
+      "age": 38,
+      "symptoms": "joint pain, fatigue",
+      "visit_date": "2025-09-20"
+    },
+    {
+      "name": "Divya Thakur",
+      "age": 22,
+      "symptoms": "headache, dizziness",
+      "visit_date": "2025-09-18"
+    },
+    {
+      "name": "Sanjay Rana",
+      "age": 55,
+      "symptoms": "cough, shortness of breath",
+      "visit_date": "2025-09-15"
+    },
+    {
+      "name": "Pooja Iyer",
+      "age": 17,
+      "symptoms": "abdominal pain, nausea",
+      "visit_date": "2025-09-12"
+    },
+    {
+      "name": "Ravi Menon",
+      "age": 64,
+      "symptoms": "vomiting, fever",
+      "visit_date": "2025-09-10"
+    },
+    {
+      "name": "Tara Bose",
+      "age": 29,
+      "symptoms": "sore throat, fatigue",
+      "visit_date": "2025-09-08"
+    },
+    {
+      "name": "Vivek Saxena",
+      "age": 44,
+      "symptoms": "back pain, muscle strain",
+      "visit_date": "2025-09-05"
+    },
+    {
+      "name": "Ishaan Pillai",
+      "age": 12,
+      "symptoms": "cough, wheezing",
+      "visit_date": "2025-09-03"
+    },
+    {
+      "name": "Kavita Shah",
+      "age": 58,
+      "symptoms": "joint pain, swelling",
+      "visit_date": "2025-09-01"
+    },
+    {
+      "name": "Nikhil Arora",
+      "age": 36,
+      "symptoms": "fever, runny nose",
+      "visit_date": "2025-08-30"
+    },
+    {
+      "name": "Shreya Dubey",
+      "age": 24,
+      "symptoms": "rash, itching",
+      "visit_date": "2025-08-28"
+    },
+    {
+      "name": "Manish Kulkarni",
+      "age": 49,
+      "symptoms": "chest pain, fatigue",
+      "visit_date": "2025-08-25"
+    },
+    {
+      "name": "Aarav Bansal",
+      "age": 7,
+      "symptoms": "vomiting, dehydration",
+      "visit_date": "2025-08-22"
+    },
+    {
+      "name": "Simran Gill",
+      "age": 40,
+      "symptoms": "headache, nausea",
+      "visit_date": "2025-08-20"
+    },
+    {
+      "name": "Yashwant Rao",
+      "age": 70,
+      "symptoms": "back pain, stiffness",
+      "visit_date": "2025-08-18"
+    },
+    {
+      "name": "Neha Varghese",
+      "age": 31,
+      "symptoms": "sore throat, cough",
+      "visit_date": "2025-08-15"
+    },
+    {
+      "name": "Rohit Chawla",
+      "age": 53,
+      "symptoms": "abdominal pain, diarrhea",
+      "visit_date": "2025-08-12"
+    },
+    {
+      "name": "Anjali Seth",
+      "age": 26,
+      "symptoms": "fever, fatigue",
+      "visit_date": "2025-08-10"
+    },
+    {
+      "name": "Kunal Mishra",
+      "age": 42,
+      "symptoms": "chest pain, shortness of breath",
+      "visit_date": "2025-08-08"
+    },
+    {
+      "name": "Saanvi Jha",
+      "age": 14,
+      "symptoms": "rash, swelling",
+      "visit_date": "2025-08-05"
+    },
+    {
+      "name": "Prakash Nair",
+      "age": 65,
+      "symptoms": "joint pain, stiffness",
+      "visit_date": "2025-08-03"
+    },
+    {
+      "name": "Riya Sood",
+      "age": 27,
+      "symptoms": "headache, dizziness",
+      "visit_date": "2025-08-01"
+    },
+    {
+      "name": "Akash Tiwari",
+      "age": 39,
+      "symptoms": "cough, wheezing",
+      "visit_date": "2025-07-30"
+    },
+    {
+      "name": "Tanvi Khanna",
+      "age": 20,
+      "symptoms": "vomiting, nausea",
+      "visit_date": "2025-07-28"
+    },
+    {
+      "name": "Devendra Pal",
+      "age": 56,
+      "symptoms": "sore throat, runny nose",
+      "visit_date": "2025-07-25"
+    },
+    {
+      "name": "Isha Dhawan",
+      "age": 33,
+      "symptoms": "abdominal pain, fatigue",
+      "visit_date": "2025-07-22"
+    },
+    {
+      "name": "Vijay Shetty",
+      "age": 61,
+      "symptoms": "back pain, muscle strain",
+      "visit_date": "2025-07-20"
+    },
+    {
+      "name": "Ayesha Khan",
+      "age": 23,
+      "symptoms": "fever, cough",
+      "visit_date": "2025-07-18"
+    },
+    {
+      "name": "Siddharth Roy",
+      "age": 48,
+      "symptoms": "chest pain, palpitations",
+      "visit_date": "2025-07-15"
+    },
+    {
+      "name": "Mira Bhardwaj",
+      "age": 16,
+      "symptoms": "rash, itching",
+      "visit_date": "2025-07-12"
+    },
+    {
+      "name": "Harish Vyas",
+      "age": 68,
+      "symptoms": "joint pain, swelling",
+      "visit_date": "2025-07-10"
+    },
+    {
+      "name": "Nandini Sen",
+      "age": 35,
+      "symptoms": "headache, nausea",
+      "visit_date": "2025-07-08"
+    },
+    {
+      "name": "Aditya Rathi",
+      "age": 11,
+      "symptoms": "cough, wheezing",
+      "visit_date": "2025-07-05"
+    },
+    {
+      "name": "Sunita Mistry",
+      "age": 54,
+      "symptoms": "abdominal pain, diarrhea",
+      "visit_date": "2025-07-03"
+    },
+    {
+      "name": "Kabir Ahuja",
+      "age": 29,
+      "symptoms": "vomiting, dehydration",
+      "visit_date": "2025-07-01"
+    },
+    {
+      "name": "Rekha Puri",
+      "age": 46,
+      "symptoms": "sore throat, fatigue",
+      "visit_date": "2025-06-28"
+    },
+    {
+      "name": "Gaurav Dutta",
+      "age": 37,
+      "symptoms": "back pain, stiffness",
+      "visit_date": "2025-06-25"
+    }
+  ]
+}
+        if want == "history":
+            return history
+        raise ValueError("Value not found")
+
 
 class JSON:
     def __init__(self):
