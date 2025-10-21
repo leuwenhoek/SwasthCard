@@ -1,0 +1,372 @@
+/* Color Palette Variables */
+:root {
+    --color-bg-dark: #0f0c29;
+    --color-bg-mid: #111827;
+    --color-card-bg: rgba(17, 24, 39, 0.9); /* Opaque for better readability */
+    --color-primary: #6366f1; /* Indigo */
+    --color-secondary: #8b5cf6; /* Violet */
+    --color-accent: #ec4899; /* Pink */
+    --color-text-light: #ffffff;
+    --color-text-subtle: #9ca3af;
+    --color-success: #86efac; /* Green for healthy/low */
+    --color-warning: #fcd34d; /* Yellow for medium */
+    --color-danger: #fca5a5; /* Red for danger/high */
+    --border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-bg-dark);
+    min-height: 100vh;
+    padding: 25px 15px;
+    color: var(--color-text-light);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Keyframe Animation: Simple fade up for sections */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Helper Class for JS-triggered animation */
+.fade-in-item {
+    animation: fadeInUp 0.4s ease-out forwards;
+    opacity: 0; /* Start hidden */
+}
+
+/* Main Container */
+.ai-container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ai-icon-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ai-icon {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-light);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+    z-index: 2;
+    position: relative;
+}
+
+.ai-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.ai-title-section h1 {
+    font-size: 2.2em;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.ai-subtitle {
+    color: var(--color-text-subtle);
+    font-size: 0.95em;
+}
+
+/* Status Badge */
+.status-badge {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-warning); /* Analyzing */
+}
+
+.status-dot.complete {
+    background-color: var(--color-success);
+}
+
+.status-badge .status-text {
+    color: var(--color-text-light);
+}
+
+/* Loading Animation */
+.loading-section {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.thinking-animation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.brain-icon {
+    width: 60px;
+    height: 60px;
+    color: var(--color-primary);
+    animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.thinking-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.thinking-dots span {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-secondary);
+    border-radius: 50%;
+    animation: dotPulse 1.5s infinite ease-in-out;
+}
+
+.thinking-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.thinking-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+.thinking-text {
+    color: var(--color-text-subtle);
+    font-style: italic;
+}
+
+/* AI Content Sections */
+.ai-section {
+    background: var(--color-card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    opacity: 0; /* Start hidden for JS animation */
+}
+
+.ai-section.typing-animation {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.section-header-ai {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(99, 102, 241, 0.1);
+}
+
+.section-header-ai h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.icon-badge {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-badge svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+}
+
+.icon-badge.danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-danger);
+}
+
+.icon-badge.genetic {
+    background-color: rgba(139, 92, 246, 0.2);
+    color: var(--color-secondary);
+}
+
+.icon-badge.success {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: var(--color-success);
+}
+
+.icon-badge.warning {
+    background-color: rgba(251, 191, 36, 0.2);
+    color: var(--color-warning);
+}
+
+.section-description {
+    color: var(--color-text-subtle);
+    margin-bottom: 20px;
+    font-style: italic;
+    font-size: 0.95em;
+}
+
+.ai-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.ai-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    border-bottom: 1px dotted rgba(99, 102, 241, 0.1);
+}
+
+.ai-list li:last-child {
+    border-bottom: none;
+}
+
+.ai-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+/* Disclaimer */
+.ai-disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(31, 41, 55, 0.7);
+    border-radius: 10px;
+    border: 1px solid rgba(236, 72, 153, 0.3); /* Accent border */
+    color: var(--color-text-subtle);
+    font-size: 0.85em;
+}
+
+.ai-disclaimer svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.ai-disclaimer strong {
+    color: var(--color-text-light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px 10px;
+    }
+    .ai-header {
+        flex-wrap: wrap;
+        padding-bottom: 15px;
+    }
+    .ai-title-section h1 {
+        font-size: 1.8em;
+    }
+    .ai-subtitle {
+        font-size: 0.9em;
+    }
+    .status-badge {
+        margin-left: 0;
+    }
+    .ai-section {
+        padding: 20px;
+    }
+    .section-header-ai h2 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-header {
+        gap: 15px;
+    }
+    .ai-title-section h1 {
+        font-size: 1.5em;
+    }
+    .ai-icon {
+        width: 45px;
+        height: 45px;
+    }
+    .ai-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+    .status-badge {
+        font-size: 0.85em;
+        padding: 6px 12px;
+    }
+    .ai-section {
+        margin-bottom: 20px;
+    }
+    .section-header-ai {
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+    .section-header-ai h2 {
+        font-size: 1.2em;
+    }
+    .ai-list li {
+        font-size: 0.9em;
+    }
+}

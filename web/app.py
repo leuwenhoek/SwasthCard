@@ -16,8 +16,12 @@ def init_JSON():
     if not os.path.exists('database'):
         os.mkdir("database")
     JSON_FOLDER = os.path.join("database")
-    jn.create_JSON(JSON_FOLDER, "patient_profile.json")
-    jn.create_JSON(JSON_FOLDER, "doctor_profile.json")
+    
+    if not os.path.exists(os.path.join(JSON_FOLDER,"patient_profile.json")):
+        jn.create_JSON(JSON_FOLDER, "patient_profile.json")
+        
+    if not os.path.exists(os.path.join(JSON_FOLDER,"doctor_profile.json")):
+        jn.create_JSON(JSON_FOLDER, "doctor_profile.json")
 
 # Global locations
 PATIENT_JSON = os.path.join("database", "patient_profile.json")
@@ -67,16 +71,16 @@ def patient_profile():
         generations = {}
     ai_suggestion_mode = request.args.get('AI') == 'true'
     if ai_suggestion_mode:
-        return redirect("/AI_mode")
+        return redirect("/AI_suggestion")
     return render_template("Patient_profile.html", history=history, generations=generations)
 
 @app.route("/doctor_profile")
 def doctor_profile():
     return "1"
 
-@app.route("/AI_mode")
+@app.route("/AI_suggestion")
 def AI():
-    return "1"
+    return render_template("Ai_page.html")
 
 if __name__ == "__main__":
     init_JSON()
