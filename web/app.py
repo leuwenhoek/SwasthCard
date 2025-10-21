@@ -18,10 +18,10 @@ def init_JSON():
     JSON_FOLDER = os.path.join("database")
     
     if not os.path.exists(os.path.join(JSON_FOLDER,"patient_profile.json")):
-        jn.create_JSON(JSON_FOLDER, "patient_profile.json")
+        jn.create_JSON(JSON_FOLDER, "patient_profile.json","paitent profile")
         
     if not os.path.exists(os.path.join(JSON_FOLDER,"doctor_profile.json")):
-        jn.create_JSON(JSON_FOLDER, "doctor_profile.json")
+        jn.create_JSON(JSON_FOLDER, "doctor_profile.json","doctor profile")
 
 # Global locations
 PATIENT_JSON = os.path.join("database", "patient_profile.json")
