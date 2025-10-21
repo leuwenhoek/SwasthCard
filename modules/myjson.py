@@ -925,7 +925,7 @@ class data:
     
     def doctor_data(self,want):
         history = {
-  "doctor_name": "Dr. Ivy Martinez",
+  "doctor_name": "Dr. Tanishqa",
   "patients_treated": [
     {
       "name": "Aditi Sharma",
@@ -1238,23 +1238,36 @@ class JSON:
     def __init__(self):
         self.data = data()
 
-    def create_JSON(self, location, filename):
+    def create_JSON(self, location, filename, code):
         try:
             # Ensure the directory exists
             os.makedirs(location, exist_ok=True)
             location_ = os.path.join(location, filename)
 
             # Combine history and generations into a single JSON object
-            combined_data = {
-                "history": self.data.user_data("history")["history"],
-                "generation_tree": self.data.user_data("generations")["generation_tree"]
-            }
+            if code == "paitent profile":
+                combined_data = {
+                    "history": self.data.user_data("history")["history"],
+                    "generation_tree": self.data.user_data("generations")["generation_tree"]
+                }
+                # Write the combined data to the file
+                with open(location_, "w") as f:
+                    json.dump(combined_data, f, indent=4)
+            elif code == "doctor profile":
+                # Use the entire doctor_data dictionary or correct key
+                combined_data = {
+                    "doctor_name": self.data.doctor_data("history")["doctor_name"],
+                    "patients_treated": self.data.doctor_data("history")["patients_treated"]
+                }
+                # Write the combined data to the file
+                with open(location_, "w") as f:
+                    json.dump(combined_data, f, indent=4)
+            else:
+                raise ValueError("Invalid code provided. Use 'paitent profile' or 'doctor profile'.")
 
-            # Write the combined data to the file
-            with open(location_, "w") as f:
-                json.dump(combined_data, f, indent=4)
-            
             return "file created"
+        except KeyError as e:
+            return f"KeyError: {str(e)} - Check the data structure in doctor_data or user_data."
         except OSError as e:
             return f"Error creating file: {str(e)}"
         except Exception as e:
