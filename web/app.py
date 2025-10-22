@@ -26,6 +26,8 @@ def init_JSON():
     if not os.path.exists(os.path.join(JSON_FOLDER,"RFID_status.json")):
         jn.create_JSON(JSON_FOLDER, "RFID_status.json","RFID status")
 
+    jn.create_JSON(JSON_FOLDER, "console.json","console")
+
 # Global locations
 PATIENT_JSON = os.path.join("database", "patient_profile.json")
 DOCTOR_JSON = os.path.join("database", "doctor_profile.json")
@@ -77,7 +79,7 @@ def patient_profile():
         return redirect("/AI_suggestion")
     return render_template("Patient_profile.html", history=history, generations=generations)
 
-@app.route("/doctor_profile")
+@app.route("/doctor_profile",methods=["GET","POST"])
 def doctor_profile():
     try:
         with open(DOCTOR_JSON, 'r') as file:
@@ -90,14 +92,18 @@ def doctor_profile():
             "total_patients_treated": 0,
             "patients_treated": []
         }
+
+    if request.form.get('action') == "add_patient_request":
+        return redirect('/doc_console')
+    
     return render_template(
         "Doctor_profile.html", 
         doctor=doctor_data # Pass the entire dictionary to the template
     )
 
-@app.route("/AI_suggestion")
-def AI():
-    return render_template("Ai_page.html")
+@app.route("/doc_console")
+def console():
+    return "Welcome to console page"
 
 if __name__ == "__main__":
     init_JSON()
