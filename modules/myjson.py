@@ -921,7 +921,8 @@ class data:
           return history
         elif want == "generations":
             return generations
-        raise ValueError("command not found")
+        else:
+            raise ValueError("command not found")
     
     def doctor_data(self,want):
         history = {
@@ -1231,7 +1232,24 @@ class data:
 }
         if want == "history":
             return history
-        raise ValueError("Value not found")
+        else:
+            raise ValueError("Value not found")
+
+    def RFID_status(self,want):
+        status = {
+            "Status" : "offline"
+        }
+        if want == "Status":
+            return status
+        else:
+            raise ValueError("Value not found")
+
+
+def createJSON(location_,combined_data):
+    # Write the combined data to the file
+    with open(location_, "w") as f:
+        json.dump(combined_data, f, indent=4)
+    return 0
 
 
 class JSON:
@@ -1250,9 +1268,8 @@ class JSON:
                     "history": self.data.user_data("history")["history"],
                     "generation_tree": self.data.user_data("generations")["generation_tree"]
                 }
-                # Write the combined data to the file
-                with open(location_, "w") as f:
-                    json.dump(combined_data, f, indent=4)
+                createJSON(location_,combined_data)
+
             elif code == "doctor profile":
                 # Use the entire doctor_data dictionary or correct key
                 combined_data = {
@@ -1260,8 +1277,11 @@ class JSON:
                     "patients_treated": self.data.doctor_data("history")["patients_treated"]
                 }
                 # Write the combined data to the file
-                with open(location_, "w") as f:
-                    json.dump(combined_data, f, indent=4)
+                createJSON(location_,combined_data)
+            
+            elif code == "RFID status":
+                createJSON(location_,self.data.RFID_status("Status"))
+            
             else:
                 raise ValueError("Invalid code provided. Use 'paitent profile' or 'doctor profile'.")
 
