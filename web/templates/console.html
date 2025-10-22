@@ -462,12 +462,21 @@
                     <h2>Symptoms</h2>
                 </div>
 
-                <form method="POST" action="/doc_console">
-                      <input type="text" name="symptoms" value="fever">
-                      <input type="text" name="symptoms" value="cold">
-                      <input type="text" name="symptoms" value="cough">
-                      <button type="submit">Send</button>
-                    </form>
+                <div class="symptoms-container">
+                    <label class="symptoms-label">Enter symptoms (Press Enter to add)</label>
+                    <div class="tags-input-wrapper" id="tagsWrapper">
+                        <input
+                            type="text"
+                            class="tag-input"
+                            id="symptomInput"
+                            placeholder="Type symptom and press Enter..."
+                            autocomplete="off"
+                        >
+                    </div>
+                    </div>
+
+                <button type="submit" class="submit-btn">Done - Submit Consultation</button>
+            </div>
         </form>
     </div>
 
