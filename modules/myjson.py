@@ -1243,6 +1243,14 @@ class data:
             return status
         else:
             raise ValueError("Value not found")
+    
+    def console(self,want):
+        temp={}
+        
+        if want == "create console":
+            return temp
+        else:
+            raise ValueError("Value not found")
 
 
 def createJSON(location_,combined_data):
@@ -1281,7 +1289,10 @@ class JSON:
             
             elif code == "RFID status":
                 createJSON(location_,self.data.RFID_status("Status"))
-            
+
+            elif code == "console":
+                createJSON(location_,self.data.console("create console"))
+        
             else:
                 raise ValueError("Invalid code provided. Use 'paitent profile' or 'doctor profile'.")
 
