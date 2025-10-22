@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
     <title>SwasthCard - Doctor Profile</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='Doctor_profile.css') }}">
+    <style>
+        /* Minimal CSS for the new button for demonstration */
+        .add-patient-btn-container {
+            text-align: right; /* Align the button to the right */
+            margin-top: 15px; /* Add some space above the button */
+            padding: 0 15px 15px 15px; /* Match padding style */
+            border-top: 1px solid #eee; /* Optional separator */
+        }
+        
+        /* Style the button */
+        .add-patient-btn {
+            background-color: #007bff; /* Primary blue color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-patient-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="profile-container">
@@ -12,12 +42,8 @@
         <div class="profile-header">
             <div class="profile-photo-wrapper">
                 <div class="profile-photo">
-                    <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"> -->
-                        <!-- <path d="M12 2L2 7l10 5 10-5-10-5z"/> -->
-                        <!-- <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/> -->
-                        <img src="https://iili.io/KS6EBxR.jpg" alt="KS6EBxR.jpg" border="0" style="border-radius: 50%;" height="100px">
-                        <circle cx="12" cy="7" r="3"/>
-                    <!-- </svg> -->
+                    <img src="https://iili.io/KS6EBxR.jpg" alt="KS6EBxR.jpg" border="0" style="border-radius: 50%;" height="100px">
+                    <circle cx="12" cy="7" r="3"/>
                 </div>
             </div>
             <div class="profile-name">
@@ -26,6 +52,16 @@
                 <p class="rfid-number">License ID: 500042326</p>
             </div>
         </div>
+
+        
+                    <div class="add-patient-btn-container">
+                        <form action="/doctor_profile" method="POST">
+                            <input type="hidden" name="action" value="add_patient_request">
+                            <button type="submit" class="add-patient-btn">
+                                + Add Patient
+                            </button>
+                        </form>
+                    </div>
 
         <div class="section-card slide-in delay-2">
             <div class="section-header">
@@ -82,7 +118,7 @@
             {% else %}
             <p class="no-data">No recent patient history available for this doctor.</p>
             {% endif %}
-        </div>
+            </div>
 
     </div>
 
