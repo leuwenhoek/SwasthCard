@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Patient_registration.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Add Patient</h1>
+                <p>Register a new patient to the system</p>
+            </div>
+
+            <form class="patient-form" method="post" action="/patient_registration" id="patientForm">
+                <div class="input-group">
+                    <label for="patientName">Patient Name</label>
+                    <input 
+                        type="text" 
+                        id="patientName" 
+                        name="patientName" 
+                        placeholder="Enter patient's full name"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="rfidNumber">RFID Number</label>
+                    <input 
+                        type="text" 
+                        id="rfidNumber" 
+                        name="rfidNumber" 
+                        placeholder="Enter RFID number"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="submit-btn">Add Patient</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
