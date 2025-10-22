@@ -1252,6 +1252,14 @@ class data:
         else:
             raise ValueError("Value not found")
 
+    def symptoms(self,want):
+        temp={}
+        
+        if want == "symptoms":
+            return temp
+        else:
+            raise ValueError("Value not found")
+
 
 def createJSON(location_,combined_data):
     # Write the combined data to the file
@@ -1292,6 +1300,9 @@ class JSON:
 
             elif code == "console":
                 createJSON(location_,self.data.console("create console"))
+            
+            elif code == "Symptoms":
+                createJSON(location_,self.data.console("symptoms"))
         
             else:
                 raise ValueError("Invalid code provided. Use 'paitent profile' or 'doctor profile'.")
