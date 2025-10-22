@@ -2,6 +2,7 @@ import os
 import json
 from flask import Flask, render_template, request, redirect, jsonify
 from os.path import dirname, join, abspath
+from datetime import date,datetime
 
 # Mymodules
 import sys
@@ -143,11 +144,17 @@ def console():
             print(f"Received data: patient_id={patient_id}, symptoms={symptoms_list}")
 
             location = os.path.join("database","Symptoms.json")
-            symptom_data = {"symptoms" : symptoms_list}
+            symptoms_str = ','.join(symptoms_list)
+            symptom_data = {
+                "symptoms" : symptoms_str,
+                "date_time" : f"{date.today()} {datetime.now().strftime("%Y-%m-%d %H:%M")}",
+                "conclusion" : "N/A",
+                "location" : "MAX delhi"
+                }
             with open(location, "w") as f:
                 json.dump(symptom_data, f, indent=4)
-
             return jsonify({"status": "ok", "patient_id": patient_id, "symptoms": symptoms_list})
+
         except Exception as e:
             print(f"Error processing request: {e}")
             return jsonify({"status": "error", "message": str(e)}), 400
