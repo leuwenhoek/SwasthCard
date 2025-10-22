@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify # ADDED jsonify
 import sys
 from os.path import dirname, join, abspath
 
@@ -9,6 +9,7 @@ sys.path.append(abspath(join(dirname(__file__), '..')))
 from modules import myjson
 
 app = Flask(__name__)
+app.secret_key = "mysec"
 
 # Initializing JSON
 def init_JSON():
@@ -27,10 +28,18 @@ def init_JSON():
         jn.create_JSON(JSON_FOLDER, "RFID_status.json","RFID status")
 
     jn.create_JSON(JSON_FOLDER, "console.json","console")
+    jn.create_JSON(JSON_FOLDER, "Symptoms.json","console")
 
 # Global locations
 PATIENT_JSON = os.path.join("database", "patient_profile.json")
 DOCTOR_JSON = os.path.join("database", "doctor_profile.json")
+
+#login credentials
+doc_id = "1234"
+doc_pass = "1234"
+patient_id = "2025"
+paitent_pass = "Ayush"
+patient_name = "Ayush"
 
 # Send user to home page that he/she is a doctor or patient
 @app.route("/", methods=["GET", "POST"])
@@ -47,7 +56,7 @@ def home():
 def doctor():
     doctor_code = request.form.get('code')
     password = request.form.get('pass')
-    if doctor_code == "1234" and password == "1234":  # login pass is "doctor code : 1234" and "password : 1234"
+    if doctor_code == doc_id and password == doc_pass:  # login pass is "doctor code : 1234" and "password : 1234"
         return redirect("/doctor_profile")
     return render_template("Doctor_login.html")
 
@@ -55,7 +64,7 @@ def doctor():
 def patient():
     RFID_num = request.form.get('num')
     password = request.form.get('pass')
-    if RFID_num == "2025" and password == "Ayush":  # login pass is "RFID Number : 2025" and "password : Ayush"
+    if RFID_num == patient_id and password == paitent_pass:  # login pass is "RFID Number : 2025" and "password : Ayush"
         return redirect("/patient_profile")
     return render_template("Patient_login.html")
 
@@ -94,16 +103,33 @@ def doctor_profile():
         }
 
     if request.form.get('action') == "add_patient_request":
-        return redirect('/doc_console')
+        return redirect('/patient_registration')
     
     return render_template(
         "Doctor_profile.html", 
         doctor=doctor_data # Pass the entire dictionary to the template
     )
 
-@app.route("/doc_console")
+@app.route("/AI_suggestion")
+def AI():
+    return render_template("AI_page.html")
+
+@app.route("/patient_registration", methods=["GET", "POST"])
+def registration():
+    # --- INDENTATION FIX STARTS HERE ---
+    message = ""
+    if request.method == "POST":
+        RFID_num = request.form.get('rfidNumber')
+        name = request.form.get('patientName')
+        if RFID_num == patient_id and name == patient_name:
+            return redirect("/doc_console")
+        else:
+            message = "Incorrect Credentials"
+    return render_template("Patient_registration.html", message=message)
+
+@app.route("/doc_console", methods=["GET", "POST"])
 def console():
-    return "Welcome to console page"
+    return render_template("console.html")
 
 if __name__ == "__main__":
     init_JSON()
