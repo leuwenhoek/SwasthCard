@@ -1305,7 +1305,7 @@ class JSON:
                 createJSON(location_,self.data.console("symptoms"))
         
             else:
-                raise ValueError("Invalid code provided. Use 'paitent profile' or 'doctor profile'.")
+                raise ValueError("Invalid code provided. Use 'patient profile' or 'doctor profile'.")
 
             return "file created"
         except KeyError as e:
@@ -1314,3 +1314,7 @@ class JSON:
             return f"Error creating file: {str(e)}"
         except Exception as e:
             return f"Unexpected error: {str(e)}"
+    
+    def add_data(self, file_path, data):
+        with open(file_path, "w") as f:
+            json.dump(data, f, indent=4)
