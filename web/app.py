@@ -76,7 +76,21 @@ def patient_profile():
 
 @app.route("/doctor_profile")
 def doctor_profile():
-    return "1"
+    try:
+        with open(DOCTOR_JSON, 'r') as file:
+            doctor_data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Fallback if file is missing or corrupted
+        doctor_data = {
+            "doctor_name": "Data Not Found", 
+            "specialization": "N/A",
+            "total_patients_treated": 0,
+            "patients_treated": []
+        }
+    return render_template(
+        "Doctor_profile.html", 
+        doctor=doctor_data # Pass the entire dictionary to the template
+    )
 
 @app.route("/AI_suggestion")
 def AI():
