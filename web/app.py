@@ -30,10 +30,7 @@ def init_JSON():
     if not os.path.exists(os.path.join(JSON_FOLDER,"doctor_profile.json")):
         jn.create_JSON(JSON_FOLDER, "doctor_profile.json","doctor profile")
 
-    if not os.path.exists(os.path.join(JSON_FOLDER,"RFID_status.json")):
-        jn.create_JSON(JSON_FOLDER, "RFID_status.json","RFID status")
-
-    jn.create_JSON(JSON_FOLDER, "console.json","console")
+    jn.create_JSON(JSON_FOLDER, "RFID_status.json","RFID status")
     jn.create_JSON(JSON_FOLDER, "Symptoms.json","console")
 
 # Login credentials (TODO: Move to secure storage)
