@@ -323,7 +323,7 @@
                     <div class="history-card">
                         <div class="history-header">
                             <span class="history-date">{{ entry.date_time }}</span>
-                            <span class="history-badge">{{ entry.conclusion.split(',')[0] }}</span>
+                            <span class="history-badge">{{ entry.conclusion.split(',')[0] if entry.conclusion is defined else "No conclusion" }}</span>
                         </div>
                         <div class="history-details">
                             <div class="history-row">
@@ -336,7 +336,7 @@
                             </div>
                             <div class="history-row">
                                 <span class="history-label">Diagnosis:</span>
-                                <span class="history-value">{{ entry.conclusion }}</span>
+                                <span class="history-value">{{ entry.get('conclusion', 'N/A') }}</span>
                             </div>
                             <div class="history-row">
                                 <span class="history-label">Location:</span>
