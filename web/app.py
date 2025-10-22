@@ -23,6 +23,9 @@ def init_JSON():
     if not os.path.exists(os.path.join(JSON_FOLDER,"doctor_profile.json")):
         jn.create_JSON(JSON_FOLDER, "doctor_profile.json","doctor profile")
 
+    if not os.path.exists(os.path.join(JSON_FOLDER,"RFID_status.json")):
+        jn.create_JSON(JSON_FOLDER, "RFID_status.json","RFID status")
+
 # Global locations
 PATIENT_JSON = os.path.join("database", "patient_profile.json")
 DOCTOR_JSON = os.path.join("database", "doctor_profile.json")
