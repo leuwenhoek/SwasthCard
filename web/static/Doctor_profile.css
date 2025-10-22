@@ -1,0 +1,523 @@
+/*
+ * Doctor_profile.css: Elegant and Minimal Dark Theme
+ * Based on the existing SwasthCard aesthetic.
+ */
+
+/* =========================================================================
+   1. COLOR PALETTE & VARIABLES
+   ========================================================================= */
+:root {
+    --color-bg-dark: #0f0c29; /* Deep Indigo/Navy */
+    --color-bg-mid: #111827; /* Dark Slate Gray for cards */
+    --color-primary: #6366f1; /* Indigo - Main brand color */
+    --color-secondary: #8b5cf6; /* Violet - Secondary accent */
+    --color-accent: #ec4899; /* Pink/Magenta - Highlight/Action color */
+    --color-text-light: #ffffff;
+    --color-text-subtle: #9ca3af; /* Light Gray for captions/metadata */
+    --color-success: #34d399; /* Green for positive data (e.g., successful treatment) */
+    --color-border: rgba(99, 102, 241, 0.2); /* Subtle blue border */
+    --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================================
+   2. BASE STYLES & ANIMATIONS
+   ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+    background-image: radial-gradient(circle at 50% 10%, rgba(99, 102, 241, 0.05), transparent 60%);
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Keyframe for content slide-in */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.6s; }
+
+/* =========================================================================
+   3. HEADER & PROFILE INFO
+   ========================================================================= */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.profile-photo-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-photo {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+}
+
+.profile-photo svg {
+    width: 45px;
+    height: 45px;
+    color: var(--color-text-light);
+}
+
+.profile-name h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    /* Gradient text effect */
+    background: linear-gradient(45deg, var(--color-text-light), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.role-title {
+    font-size: 1.2em;
+    color: var(--color-primary);
+    margin-top: 5px;
+}
+
+.rfid-number {
+    font-family: monospace;
+    font-size: 0.9em;
+    color: var(--color-text-subtle);
+    margin-top: 8px;
+}
+
+/* =========================================================================
+   4. GENERAL CARD STYLES
+   ========================================================================= */
+.section-card {
+    background: var(--color-bg-mid);
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--color-border);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.section-header h2 {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--color-text-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-label {
+    font-size: 1.2em;
+    color: var(--color-accent);
+}
+
+.section-subtitle {
+    font-size: 0.9em;
+    color: var(--color-text-subtle);
+    font-style: italic;
+}
+
+/* =========================================================================
+   5. PERSONAL DETAILS GRID
+   ========================================================================= */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 30px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: var(--color-text-light);
+}
+
+.highlight {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* =========================================================================
+   6. PATIENTS TREATED TIMELINE
+   ========================================================================= */
+.history-timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-primary);
+    opacity: 0.3;
+}
+
+.history-item {
+    position: relative;
+    padding: 15px 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -27px;
+    top: 25px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-secondary);
+    border-radius: 50%;
+    border: 2px solid var(--color-bg-mid);
+    box-shadow: 0 0 0 4px var(--color-bg-dark); /* Creates a glowing effect against the dark background */
+}
+
+.history-card {
+    background-color: rgba(99, 102, 241, 0.05); /* Very subtle primary tint */
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+}
+
+.history-date {
+    font-size: 0.95em;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.history-row {
+    display: flex;
+    gap: 15px;
+    padding: 5px 0;
+}
+
+.history-label {
+    min-width: 100px; /* Aligns the data points */
+    font-weight: 600;
+    color: var(--color-text-subtle);
+}
+
+.history-value {
+    color: var(--color-text-light);
+}
+
+.highlight-success {
+    color: var(--color-success);
+    font-weight: 500;
+}
+
+.no-data {
+    color: var(--color-text-subtle);
+    padding: 10px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* =========================================================================
+   7. RESPONSIVE DESIGN
+   ========================================================================= */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .profile-name h1 {
+        font-size: 2em;
+        margin-top: 10px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 20px;
+    }
+
+    .history-timeline {
+        padding-left: 25px;
+    }
+
+    .history-timeline::before {
+        left: 8px;
+    }
+
+    .timeline-dot {
+        left: -32px;
+    }
+
+    .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .history-row {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .history-label {
+        min-width: auto;
+        font-weight: 600;
+        margin-top: 5px;
+    }
+}
+
+/*
+ * Doctor_profile.css: Elegant and Minimal Dark Theme with Gradients and Hovers
+ */
+
+/* =========================================================================
+   1. COLOR PALETTE & VARIABLES
+   ========================================================================= */
+:root {
+    --color-bg-dark: #0f0c29; /* Deep Indigo/Navy */
+    --color-bg-mid: #111827; /* Dark Slate Gray for cards */
+    --color-primary: #6366f1; /* Indigo - Main brand color */
+    --color-secondary: #8b5cf6; /* Violet - Secondary accent */
+    --color-accent: #ec4899; /* Pink/Magenta - Highlight/Action color */
+    --color-text-light: #ffffff;
+    --color-text-subtle: #9ca3af; /* Light Gray for captions/metadata */
+    --color-success: #34d399; /* Green for positive data */
+    --color-warning: #fcd34d; /* Yellow for attention */
+    --color-border: rgba(99, 102, 241, 0.2); /* Subtle blue border */
+    --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 10px 30px rgba(99, 102, 241, 0.3); /* Stronger shadow on hover */
+}
+
+/* =========================================================================
+   2. BASE STYLES & ANIMATIONS
+   ========================================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Apply transition to *most* elements for smooth hovers */
+    transition: all 0.3s ease-in-out; 
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-text-light);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+    /* Elegant Background Gradient */
+    background: radial-gradient(circle at 10% 20%, var(--color-bg-mid) 0%, var(--color-bg-dark) 40%, #08061a 100%);
+    background-size: 400% 400%; /* For potential animation, but static here */
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Keyframe for content slide-in (remains for initial load elegance) */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slideIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.4s; }
+
+/* =========================================================================
+   3. HEADER & PROFILE INFO
+   ========================================================================= */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    /* Subtle Gradient Border */
+    border-bottom: 2px solid;
+    border-image: linear-gradient(to right, var(--color-primary), var(--color-bg-dark)) 1;
+}
+
+.profile-photo {
+    /* Gradient background for the photo circle */
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    /* Hover effect on Icon Wrapper */
+    transform: scale(1);
+}
+
+.profile-photo-wrapper:hover .profile-photo {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--color-accent);
+}
+
+.profile-name h1 {
+    /* Gradient text effect */
+    background: linear-gradient(45deg, var(--color-text-light), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================================
+   4. GENERAL CARD STYLES & HOVER EFFECTS
+   ========================================================================= */
+.section-card {
+    background: var(--color-bg-mid);
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--color-border);
+    cursor: default;
+}
+
+/* Card Hover Effect: Lift and Shadow Glow */
+.section-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-primary); /* Highlight border on hover */
+}
+
+.section-header h2 {
+    color: var(--color-primary); /* Use primary color for section headers */
+}
+
+/* =========================================================================
+   5. PATIENTS TREATED TIMELINE & HOVER EFFECTS
+   ========================================================================= */
+.history-timeline::before {
+    /* Subtle Gradient on the Timeline Line */
+    background-image: linear-gradient(to top, var(--color-secondary) 0%, rgba(99, 102, 241, 0.1) 100%);
+    width: 3px;
+    opacity: 0.8;
+}
+
+.timeline-dot {
+    /* Subtle Animation on the dot */
+    animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 0 0 var(--color-secondary); }
+    to { box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+}
+
+.history-card {
+    background-color: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    transform: translateX(0);
+}
+
+/* History Card Hover Effect: Subtle move and background change */
+.history-item:hover .history-card {
+    transform: translateX(5px);
+    background-color: rgba(99, 102, 241, 0.15); /* Darker/more saturated on hover */
+    /* Subtle gradient border effect on hover */
+    border: 1px solid;
+    border-image: linear-gradient(to right, var(--color-accent), var(--color-secondary)) 1;
+}
+
+.history-item:hover .history-header .history-date {
+    color: var(--color-accent); /* Highlight date on hover */
+}
+
+.highlight-success {
+    /* Ensure successful data stands out */
+    background: linear-gradient(90deg, var(--color-success), rgba(52, 211, 153, 0.5));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
+/* =========================================================================
+   6. RESPONSIVE DESIGN (Remains the same, focusing on layout)
+   ========================================================================= */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+}
