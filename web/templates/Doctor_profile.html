@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwasthCard - Doctor Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Doctor_profile.css') }}">
+</head>
+<body>
+    <div class="profile-container">
+        
+        <div class="profile-header">
+            <div class="profile-photo-wrapper">
+                <div class="profile-photo">
+                    <!-- <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 40px; height: 40px;"> -->
+                        <!-- <path d="M12 2L2 7l10 5 10-5-10-5z"/> -->
+                        <!-- <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/> -->
+                        <img src="https://iili.io/KS6EBxR.jpg" alt="KS6EBxR.jpg" border="0" style="border-radius: 50%;" height="100px">
+                        <circle cx="12" cy="7" r="3"/>
+                    <!-- </svg> -->
+                </div>
+            </div>
+            <div class="profile-name">
+                <h1>{{ doctor.doctor_name }}</h1>
+                <p class="role-title">General physician</p>
+                <p class="rfid-number">License ID: 500042326</p>
+            </div>
+        </div>
+
+        <div class="section-card slide-in delay-2">
+            <div class="section-header">
+                <h2><span class="icon-label"></span> Personal Details</h2>
+            </div>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Contact Email:</span>
+                    <span class="detail-value">pqrs@max.com</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Contact Phone:</span>
+                    <span class="detail-value">+91 70022 *****</span>
+                </div>
+                <div class="detail-item full-width">
+                    <span class="detail-label">Office Location:</span>
+                    <span class="detail-value">MAX delhi</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card slide-in delay-3">
+            <div class="section-header">
+                <h2><span class="icon-label">📝</span> Recent Patients Treated</h2>
+                <span class="section-subtitle">A timeline of recent consultations.</span>
+            </div>
+            
+            {% if doctor.patients_treated and doctor.patients_treated|length > 0 %}
+            <div class="history-timeline">
+                {% for patient in doctor.patients_treated %}
+                <div class="history-item">
+                    <div class="timeline-dot"></div>
+                    <div class="history-card">
+                        <div class="history-header">
+                            <span class="history-label">Patient Name:</span>
+                            <span class="history-date">{{ patient.visit_date | default('N/A') }}</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="history-label">Name:</span>
+                            <span class="history-value">{{ patient.name | default('Unknown') }} ({{ patient.age | default('N/A') }} yo)</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="history-label">Symptoms:</span>
+                            <span class="history-value">{{ patient.symptoms | default('N/A') }}</span>
+                        </div>
+                        <div class="history-row">
+                            <span class="history-label">Conclusion:</span>
+                            <span class="history-value highlight-success">{{ patient.diagnosis | default('Under review') }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="no-data">No recent patient history available for this doctor.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    </body>
+</html>
