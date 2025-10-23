@@ -1238,7 +1238,7 @@ class data:
     def RFID_status(self,want):
         status = {
             "Status" : "offline",
-            "Counter" : 0
+            "Code" : "stopped"
         }
         if want == "Status":
             return status
