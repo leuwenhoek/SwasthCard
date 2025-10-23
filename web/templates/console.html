@@ -116,7 +116,6 @@
                     addTag(value);
                     symptoms.push(value);
                     this.value = '';
-                    console.log('Current Symptoms:', symptoms);
                 }
             }
         });
@@ -130,13 +129,12 @@
             `;
             tagsWrapper.insertBefore(tag, symptomInput);
 
-            // Add remove functionality
+            // Remove functionality
             tag.querySelector('.tag-remove').addEventListener('click', () => {
                 const index = symptoms.indexOf(text);
                 if (index > -1) {
                     symptoms.splice(index, 1);
                     tag.remove();
-                    console.log('Updated Symptoms:', symptoms);
                 }
             });
         }
@@ -150,48 +148,57 @@
                 return;
             }
 
-            // Join symptoms into a comma-separated string
             const symptomsString = symptoms.join(',');
-
-            // Data to be sent
             const consultationData = {
                 patient_id: 'PT-2024-001',
                 symptoms: symptomsString
             };
 
-            console.log('Submitting data to /doc_console:', consultationData);
-
             try {
                 const response = await fetch('/doc_console', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(consultationData)
                 });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
                 const data = await response.json();
-                console.log('Success:', data);
                 alert('Consultation submitted successfully!');
-                // Clear symptoms and UI
+                // Clear symptoms
                 symptoms.length = 0;
                 tagsWrapper.querySelectorAll('.symptom-tag').forEach(tag => tag.remove());
             } catch (error) {
                 console.error('Submission Error:', error);
-                alert('An error occurred during submission. Check the console for details.');
+                alert('An error occurred during submission.');
             }
         });
 
-        // Keep input focused when clicking on wrapper
+        // Focus input when clicking wrapper
         tagsWrapper.addEventListener('click', function(e) {
-            if (e.target === tagsWrapper) {
-                symptomInput.focus();
-            }
+            if (e.target === tagsWrapper) symptomInput.focus();
         });
+
+        // ----------------- RFID polling -----------------
+        const POLL_INTERVAL = 2000; // 2 sec
+
+        async function checkCardStatus() {
+            try {
+                const res = await fetch('/rfid_status');
+                const data = await res.json();
+                const status = (data.status || '').toLowerCase();
+
+                if (status !== 'online') {
+                    alert("Card disconnected! Returning to waiting screen...");
+                    window.location.href = '/doc_console';
+                }
+            } catch (err) {
+                console.error("Error checking RFID status:", err);
+            }
+        }
+
+        // Start polling continuously
+        setInterval(checkCardStatus, POLL_INTERVAL);
     </script>
 </body>
 </html>
