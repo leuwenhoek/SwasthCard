@@ -140,10 +140,8 @@ def get_rfid_status():
     return jsonify({"status": status})
 
 
-# Modified doctor console route:
 @app.route("/doc_console", methods=["GET", "POST"])
 def console():
-    # If GET: check RFID status first. If not online -> show blocker waiting page
     if request.method == "GET":
         try:
             with open(RFID_JSON, "r") as f:
@@ -153,39 +151,51 @@ def console():
             status = "offline"
 
         if status != "online":
-            # Show waiting page until card goes online.
-            # Pass the expected patient_id (here global) so template shows "Waiting for card '2025'"
             return render_template("waiting_for_card.html", waiting_id=patient_id)
-
-        # else fallthrough to render the console page (GET + status online)
         return render_template("console.html")
 
-    # If POST: keep your original POST handling for console
+    # POST: Save symptoms directly to patient_profile.json history
     if request.method == "POST":
         try:
             data = request.get_json(force=True)
             patient_id_req = data.get("patient_id", "")
             symptoms_string = data.get("symptoms", "")
-            # Split the comma-separated string into a list for processing
             symptoms_list = [s.strip() for s in symptoms_string.split(",") if s.strip()]
-            print(f"Received data: patient_id={patient_id_req}, symptoms={symptoms_list}")
 
-            location = os.path.join("database", "Symptoms.json")
-            symptoms_str = ",".join(symptoms_list)
-            symptom_data = {
-                "symptoms": symptoms_str,
+            # Load patient_profile.json
+            try:
+                with open(PATIENT_JSON, "r") as f:
+                    patient_data = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                patient_data = {}
+
+            # Ensure 'history' exists
+            if "history" not in patient_data:
+                patient_data["history"] = []
+
+            # Append new entry
+            new_record = {
                 "date_time": f"{date.today()} {datetime.now().strftime('%Y-%m-%d %H:%M')}",
-                "conclusion": "N/A",
-                "location": "MAX delhi"
+                "symptoms": ",".join(symptoms_list),
+                "doctor_name": "Dr. tanishqa",  # You can make this dynamic later
+                "conclusion": "N/A",            # You can update this later with AI or manual input
+                "location": "MAX delhi"         # You can make this dynamic later
             }
-            with open(location, "w") as f:
-                json.dump(symptom_data, f, indent=4)
+
+            # Append new entry at the start of history
+            patient_data["history"].insert(0, new_record)
+
+
+            # Save back to patient_profile.json
+            with open(PATIENT_JSON, "w") as f:
+                json.dump(patient_data, f, indent=4)
+
             return jsonify({"status": "ok", "patient_id": patient_id_req, "symptoms": symptoms_list})
 
         except Exception as e:
             print(f"Error processing request: {e}")
             return jsonify({"status": "error", "message": str(e)}), 400
-
+        
 if __name__ == "__main__":
     init_JSON()
     rfid_listener.start_listener()
