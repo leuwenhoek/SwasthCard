@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Waiting for card</title>
+  <style>
+    body { font-family: Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; background:#f7f7f9; margin:0;}
+    .card { text-align:center; padding:30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); background:white; width:90%; max-width:420px;}
+    .spinner { margin:20px auto; width:48px; height:48px; border-radius:50%; border:6px solid #eee; border-top-color:#007bff; animation:spin 1s linear infinite;}
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .muted { color:#666; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Waiting for card '<span id="card-id">{{ waiting_id }}</span>'</h2>
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="muted">Please tap the RFID card on the reader. This console will open automatically when status becomes <strong>online</strong>.</p>
+    <p id="status-msg" class="muted">Checking...</p>
+  </div>
+
+<script>
+  // Poll interval (ms)
+  const POLL_INTERVAL = 2000;
+
+  async function checkStatus() {
+    try {
+      const res = await fetch('/rfid_status');
+      if (!res.ok) throw new Error('Network error');
+      const j = await res.json();
+      const st = (j.status || '').toLowerCase();
+      document.getElementById('status-msg').textContent = "Current status: " + st;
+      if (st === 'online') {
+        // Redirect to console; server GET /doc_console will now render console.html
+        window.location.href = '/doc_console';
+      }
+    } catch (err) {
+      document.getElementById('status-msg').textContent = 'Error checking card. Retrying...';
+      console.error(err);
+    }
+  }
+
+  // Start polling
+  checkStatus();
+  setInterval(checkStatus, POLL_INTERVAL);
+</script>
+</body>
+</html>
