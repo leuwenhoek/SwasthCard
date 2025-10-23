@@ -188,4 +188,5 @@ def console():
 
 if __name__ == "__main__":
     init_JSON()
+    rfid_listener.start_listener()
     app.run(debug=True)
