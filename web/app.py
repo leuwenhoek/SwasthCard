@@ -8,6 +8,7 @@ from datetime import date,datetime
 import sys
 sys.path.append(abspath(join(dirname(__file__), '..')))
 from modules import myjson
+from modules import rfid_listener
 
 app = Flask(__name__)
 app.secret_key = "mysec"
@@ -128,35 +129,62 @@ def registration():
             message = "Incorrect Credentials"
     return render_template("Patient_registration.html", message=message)
 
-# Doctor console
+@app.route("/rfid_status")
+def get_rfid_status():
+    try:
+        with open(RFID_JSON, "r") as f:
+            rf = json.load(f)
+            status = rf.get("Status", "offline")
+    except Exception:
+        status = "offline"
+    return jsonify({"status": status})
+
+
+# Modified doctor console route:
 @app.route("/doc_console", methods=["GET", "POST"])
 def console():
+    # If GET: check RFID status first. If not online -> show blocker waiting page
+    if request.method == "GET":
+        try:
+            with open(RFID_JSON, "r") as f:
+                rf = json.load(f)
+                status = rf.get("Status", "offline")
+        except Exception:
+            status = "offline"
+
+        if status != "online":
+            # Show waiting page until card goes online.
+            # Pass the expected patient_id (here global) so template shows "Waiting for card '2025'"
+            return render_template("waiting_for_card.html", waiting_id=patient_id)
+
+        # else fallthrough to render the console page (GET + status online)
+        return render_template("console.html")
+
+    # If POST: keep your original POST handling for console
     if request.method == "POST":
         try:
             data = request.get_json(force=True)
-            patient_id = data.get("patient_id", "")
+            patient_id_req = data.get("patient_id", "")
             symptoms_string = data.get("symptoms", "")
             # Split the comma-separated string into a list for processing
             symptoms_list = [s.strip() for s in symptoms_string.split(",") if s.strip()]
-            print(f"Received data: patient_id={patient_id}, symptoms={symptoms_list}")
+            print(f"Received data: patient_id={patient_id_req}, symptoms={symptoms_list}")
 
-            location = os.path.join("database","Symptoms.json")
-            symptoms_str = ','.join(symptoms_list)
+            location = os.path.join("database", "Symptoms.json")
+            symptoms_str = ",".join(symptoms_list)
             symptom_data = {
-                "symptoms" : symptoms_str,
-                "date_time" : f"{date.today()} {datetime.now().strftime("%Y-%m-%d %H:%M")}",
-                "conclusion" : "N/A",
-                "location" : "MAX delhi"
-                }
+                "symptoms": symptoms_str,
+                "date_time": f"{date.today()} {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                "conclusion": "N/A",
+                "location": "MAX delhi"
+            }
             with open(location, "w") as f:
                 json.dump(symptom_data, f, indent=4)
-            return jsonify({"status": "ok", "patient_id": patient_id, "symptoms": symptoms_list})
+            return jsonify({"status": "ok", "patient_id": patient_id_req, "symptoms": symptoms_list})
 
         except Exception as e:
             print(f"Error processing request: {e}")
             return jsonify({"status": "error", "message": str(e)}), 400
-
-    return render_template("console.html")
 
 if __name__ == "__main__":
     init_JSON()
